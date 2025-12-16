@@ -1,135 +1,101 @@
-# Turborepo starter
+# 🛡️ ZAuth - Open Source Authentication as a Service
 
-This Turborepo starter is maintained by the Turborepo core team.
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-000000?style=flat-square&logo=express&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-000000?style=flat-square&logo=jsonwebtokens&logoColor=red)
+![Bcrypt](https://img.shields.io/badge/Bcrypt-4C75A1?style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MCA1MCI+PHBhdGggZmlsbD0iIzQwYjYxMiIgZD0iTTEyLjUgNDAuNmg1LjV2LTVuMTE0SDExLjJsNS41LTcuNzE0aDUuMjI4TDE3LjkgMTloNy42NmwyLjEtM3YtMy41aC0xMi42bC01LjkgOS42VjQzLjY1eiIvPjxwYXRoIGZpbGw9IiM2NmM2YjMiIGQ9Ik0yNSA0MC42VjcuOTExbDEwLjMgMTQuMTI5LTMuNCAzLjVIMjEuNVY0MC42eiIvPjwvc3ZnPg==&logoColor=white)
+![License](https://img.shields.io/github/license/YourUsername/ZAuth?style=flat-square)
+![GitHub issues](https://img.shields.io/github/issues/YourUsername/ZAuth?style=flat-square)
 
-## Using this example
+## 🌟 Overview
 
-Run the following command:
+**ZAuth** is an open-source, self-hosted Authentication as a Service (AaaS) platform designed for developers who need robust, secure, and easily integrated authentication for their applications.
 
-```sh
-npx create-turbo@latest
-```
+The project is built as a **Monorepo** using **Turborepo** to separate the core **API** from the **Website/Documentation**.
 
-## What's inside?
+### Key Features (v1.0)
 
-This Turborepo includes the following packages/apps:
+* **Secure Password Hashing:** Uses **bcrypt** with a configurable salt factor for maximum password security.
+* **Stateless Authentication:** Implements **JSON Web Tokens (JWT)** for efficient, stateless API authentication and authorization.
+* **Core Endpoints:** Provides simple, powerful REST endpoints for `Register`, `Login`, and `Token Refresh`.
+* **Scalable Architecture:** Modular structure (`modules/auth`, `modules/user`) to support future growth (e.g., MFA, OAuth, WebAuthn).
 
-### Apps and Packages
+## 🚀 Getting Started
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+Follow these steps to set up the ZAuth Monorepo for local development.
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+### Prerequisites
 
-### Utilities
+* Node.js (LTS version recommended, e.g., 18.x or 20.x)
+* npm or pnpm (recommended for monorepos)
+* A database (e.g., PostgreSQL, MongoDB, etc. - Update based on your actual choice)
 
-This Turborepo has some additional tools already setup for you:
+### Installation
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+1.  **Clone the Repository:**
 
-### Build
+    ```bash
+    git clone [https://github.com/YourUsername/ZAuth.git](https://github.com/YourUsername/ZAuth.git)
+    cd ZAuth
+    ```
 
-To build all apps and packages, run the following command:
+2.  **Install Dependencies:**
+    This command runs from the root of the monorepo and installs dependencies for both `zauth-api` and `zauth-web`.
 
-```
-cd my-turborepo
+    ```bash
+    npm install
+    # OR
+    pnpm install
+    ```
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
+3.  **Setup Environment Variables:**
+    Create a `.env` file in the `packages/zauth-api` directory. Copy the contents from `.env.example`.
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
-```
+    ```bash
+    # packages/zauth-api/.env
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+    # Server Configuration
+    PORT=3000
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+    # Database Configuration (Example: PostgreSQL)
+    DB_HOST=localhost
+    DB_USER=zauth_user
+    DB_PASS=secret_password
+    DB_NAME=zauth_db
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+    # JWT Secrets (CRITICAL: Change this to a long, complex string!)
+    JWT_SECRET="YourVerySecureAndLongSecretKeyHere"
+    JWT_EXPIRY="1h" # Token expiration time
+    ```
 
-### Develop
+### Running the Project
 
-To develop all apps and packages, run the following command:
+Use the central `npm` or `pnpm` scripts from the root directory to manage services:
 
-```
-cd my-turborepo
+| Command | Action | Location |
+| :--- | :--- | :--- |
+| `npm run dev` | Runs both the API and the Web services in development mode. | `zauth-api` & `zauth-web` |
+| `npm run dev:api` | Runs only the Authentication API. | `zauth-api` |
+| `npm run dev:web` | Runs only the Website/Docs. | `zauth-web` |
+| `npm run build` | Builds both the API and the Web services for production. | `zauth-api` & `zauth-web` |
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
+## ⚙️ Core API Endpoints (`/api/v1`)
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
+The ZAuth API runs on the configured port (default: `http://localhost:3000`).
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+| Method | Endpoint | Description | Authentication |
+| :--- | :--- | :--- | :--- |
+| **`POST`** | `/api/v1/auth/register` | Creates a new user account. | Public |
+| **`POST`** | `/api/v1/auth/login` | Authenticates user and returns a new JWT. | Public |
+| **`POST`** | `/api/v1/auth/refresh` | Generates a new access token using a refresh token. | Refresh Token |
+| **`GET`** | `/api/v1/user/profile` | Retrieves the authenticated user's profile data. | Access Token |
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
+### Example Usage (Login)
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
+**Request** (`POST` to `http://localhost:3000/api/v1/auth/login`):
 
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+```json
+{
+    "email": "testuser@example.com",
+    "password": "mySecurePassword123"
+}
